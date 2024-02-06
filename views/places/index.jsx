@@ -11,7 +11,7 @@ function index (data) {
           <p className='text-center'>
             {place.cuisines}
           </p>
-          <img  class="rounded mx-auto d-block" src={place.pic} alt={place.name} />
+          <img  className="rounded mx-auto d-block" src={place.pic} alt={place.name} />
           <p className="text-center"> Located in {place.city},{place.state}</p>
         </div>
       )
