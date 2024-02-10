@@ -1,14 +1,17 @@
 require('dotenv').config()
 const express = require('express')
-const methodOvveride = require('method-override')
+const methodOverride = require('method-override')
 const app = express()
+
 
 // app.set('views', _dirname + '/views')
 app.set('view engine', 'jsx')
+app.use(methodOverride('_method'))
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.urlencoded({ extended: true }))
+
 app.use(express.static('public'))
-app.use(methodOvveride('_method'))
+
 
 
 
