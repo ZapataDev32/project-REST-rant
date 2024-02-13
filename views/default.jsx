@@ -26,13 +26,13 @@ function Def (html) {
 
                 
             </body>
-            <footer>
+            {/* <footer>
                 <nav class="navbar sticky-bottom bg-body-tertiary">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="#">Sticky bottom</a>
+                            <a class="navbar-brand" href="#"></a>
                         </div>
                 </nav>
-            </footer>
+            </footer> */}
 
         </html>
     )
