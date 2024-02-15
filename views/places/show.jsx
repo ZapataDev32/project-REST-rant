@@ -12,6 +12,9 @@ function show (data) {
             <div className='row align-items-start'>
                 <div className='col'>
                     <img src={data.place.pic} alt={data.place.name}/>
+                    <h3>
+                        Located in {data.place.city}, {data.place.state}
+                    </h3>
                 </div>
             </div>
             <div className='col'>
@@ -19,6 +22,13 @@ function show (data) {
                 <p>{cuisinesBadges}</p>
                 <p className='badge rounded-pill text-bg-info me-2'>{`${data.place.city}, ${data.place.state}`}</p>
             </div>
+            <h2>Description</h2>
+            <h3>
+                {data.place.showEstablished()}
+            </h3>
+            <h4>
+                Serving {data.place.cuisines}
+            </h4>
             <div className='row align-items-center'>
                 <div className='col'>
                     <a href={`/places/${data.id}/edit`} className='btn btn-warning'>
