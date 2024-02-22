@@ -7,11 +7,29 @@ function show (data) {
             No comments yet Bro!
         </h3>
     )
+    let rating = (
+        <h3 className='inactive'>
+            Not yet rated
+        </h3>
+    )
     if (data.place.comments.length) {
+        let sumRating = data.place.comments.reduce((tot, c) => {
+            return tot + c.stars
+        }, 0)
+        let averageRating = Math.round(sumRating / data.place.comments.length)
+        let stars = ''
+        for (let i = 0; i < averageRating; i++) {
+            stars += '⭐'
+        }
+        rating = (
+            <h3>
+                {stars} stars
+            </h3>
+        )
         comments = data.place.comments.map(c => {
           return (
             <div className="border">
-              <h2 className="rant">{c.rant ? 'Rant! ' : 'Rave! '}</h2>
+              <h2 className="rant">{c.rant ? 'Rant! 🤬 ' : 'Rave! 😻'}</h2>
               <h4>{c.content}</h4>
               <h3>
                 <stong>- {c.author}</stong>
@@ -22,6 +40,10 @@ function show (data) {
         })
     }
 
+
+
+
+    
     const cuisinesBadges = data.place.cuisines.split(',').map((cuisine) => {
         return <span key={cuisine} className='badge rounded-pill text-bg-info me-2'> {cuisine}</span>
     })
@@ -37,6 +59,9 @@ function show (data) {
                 </div>
                 <div className="col">
                     <h1>{data.place.name}</h1>
+                    <h2>
+                        {rating}
+                    </h2>
                     <p>{cuisinesBadges}</p>
                     <p className='badge rounded-pill text-bg-info me-2'>{`${data.place.city}, ${data.place.state}`}</p> 
                     <h2>Description</h2>
@@ -46,14 +71,14 @@ function show (data) {
                     <h4>
                         Serving {data.place.cuisines}
                     </h4>
-                    <a href={`/places/${data.id}/edit`} className='btn btn-warning'>
+                    <a href={`/places/${data.place.id}/edit`} className='btn btn-warning'>
                         Edit
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                         <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                         </svg>
                         </a>
-                        <form method= "POST" action={`/places/${data.id}?_method=DELETE`}>
+                        <form method= "POST" action={`/places/${data.place.id}?_method=DELETE`}>
                         <button type='submit' className='btn btn-danger'>
                             Delete
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
@@ -75,7 +100,7 @@ function show (data) {
                 </div>
             </div>
             <h2>Got Your own Rant or Rave?</h2>
-            <form action={`/places/${data.id}/comment`} method='POST'>
+            <form action={`/places/${data.place.id}/comment`} method='POST'>
                 <div className='row'>
                     <div className='form-group col-sm-12'>
                         <label htmlFor='content'>Content</label>

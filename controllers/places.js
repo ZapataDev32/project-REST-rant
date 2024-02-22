@@ -61,6 +61,9 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/:id/comment', (req, res) => {
+  let commentData = req.body;
+  commentData.rant = commentData.rant === 'on';
+  commentData.stars = parseFloat(commentData.stars)
   console.log(req.body)
   db.Place.findById(req.params.id)
   .then(place => {
@@ -82,19 +85,41 @@ router.post('/:id/comment', (req, res) => {
 })
 
 
+// DELETE
+router.delete('/:id', (req, res) => {
+  db.Place.findByIdAndDelete(req.params.id)
+  .then(place => {
+      res.redirect('/places')
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
+})
 
 
-// router.put('/:id', (req, res) => {
-//   res.send('PUT /places/:id stub')
-// })
+// edit
+router.get('/:id/edit', (req, res) => {
+  db.Place.findById(req.params.id)
+  .then(place => {
+      res.render('places/edit', { place })
+  })
+  .catch(err => {
+      res.render('error404')
+  })
+})
 
-// router.delete('/:id', (req, res) => {
-//   res.send('DELETE /places/:id stub')
-// })
 
-// router.get('/:id/edit', (req, res) => {
-//   res.send('GET edit form stub')
-// })
+router.put('/:id', (req, res) => {
+  db.Place.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+      res.redirect(`/places/${req.params.id}`)
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
+})
 
 // router.post('/:id/rant', (req, res) => {
 //   res.send('GET /places/:id/rant stub')
