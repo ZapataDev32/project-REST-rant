@@ -1,8 +1,7 @@
 
-
-
 const router = require('express').Router()
 const db = require('../models')
+const Comment = require('../models/comment'); // Import the Comment model
 
 router.get('/', (req, res) => {
     db.Place.find()
@@ -96,6 +95,38 @@ router.delete('/:id', (req, res) => {
       res.render('error404')
   })
 })
+
+// router.delete('/comment/:commentId', (req, res) => {
+//   db.Comment.findByIdAndDelete(req.params.commentId)
+//   .then(comment => {
+//     if (!comment) {
+//     return res.render('error404')
+//     }
+//     res.redirect(`/places/show/${comment.place}`)
+//   })
+//   .catch(err => {
+//     console.log('error deleting comment:', err)
+//   })
+// })
+
+router.delete('/comment/:commentId', (req, res) => {
+  db.Comment.findByIdAndDelete(req.params.commentId)
+    .then(comment => {
+      if (!comment) {
+        console.log('Comment not found');
+        return res.render('error404');
+      }
+      console.log('Comment deleted successfully');
+      console.log('Redirecting to place:', comment.place);
+      res.redirect(`/places/edit/${comment.place}`);
+    })
+    .catch(err => {
+      console.log('Error deleting comment:', err);
+      // Handle errors appropriately
+      res.status(500).send('Error deleting comment');
+    });
+});
+
 
 
 // edit

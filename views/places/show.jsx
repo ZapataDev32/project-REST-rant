@@ -35,6 +35,9 @@ function show (data) {
                 <stong>- {c.author}</stong>
               </h3>
               <h4>Rating: {c.stars}</h4>
+              <form method='POST' action={`/places/comment/${c.id}?_method=DELETE`}>
+                <input type="submit" className='btn btn-danger' value="Delete Comment"></input>
+              </form>
             </div>
           )
         })
@@ -89,9 +92,9 @@ function show (data) {
                     </form>
                 </div>
             </div>
-            <div className='col'>
+            {/* <div className='col'>
 
-            </div>
+            </div> */}
 
             <div className='row'>
                 <div className='form-group col-sm-12'>
