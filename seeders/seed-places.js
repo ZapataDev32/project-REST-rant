@@ -33,3 +33,4 @@ db.Place.create([{
     process.exit(1)
 })
 })
+
